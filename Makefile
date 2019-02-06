@@ -73,12 +73,8 @@ cover:
 # source files, except the protobuf stubs which are built instead with
 # "make protobuf".
 generate: tools
-	# We turn off modules for "go generate" because our downstream generate
-	# commands are not all ready to deal with Go modules yet.
-	# See https://github.com/golang/go/issues/24661
-	# This also avoids downloading all of the deps that are in the vendor dir anyway.
-	GO111MODULE=off go generate ./...
-	GO111MODULE=off go fmt command/internal_plugin_list.go > /dev/null
+	go generate -mod=vendor ./...
+	go fmt command/internal_plugin_list.go > /dev/null
 
 # We separate the protobuf generation because most development tasks on
 # Terraform do not involve changing protobuf files and protoc is not a
